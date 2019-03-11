@@ -20,8 +20,7 @@ class BookRow extends Component {
         <Link to={`/books/${book.color}`}>
           <button 
             className="btn" 
-            style={{ backgroundColor: book.color }}
-            onClick={() => this.props.onClick(book.color)} 
+            style={{ backgroundColor: book.color }} 
           />
         </Link>
 

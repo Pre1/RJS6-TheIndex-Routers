@@ -8,7 +8,7 @@ class BookTable extends Component {
       <BookRow 
       key={book.id}
       book={book}
-      onClick={this.props.onClick} />
+      />
     ));
     return (
       <table className="mt-3 table">
