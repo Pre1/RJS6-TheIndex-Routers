@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import Loading from "./Loading";
 import AuthorsList from "./AuthorsList";
 import AuthorDetail from "./AuthorDetail";
+import BookList from "./BookList";
 
 const instance = axios.create({
   baseURL: "https://the-index-api.herokuapp.com"
@@ -15,7 +16,8 @@ const instance = axios.create({
 class App extends Component {
   state = {
     authors: [],
-    loading: true
+    books: [],
+    loading: true,
   };
 
   fetchAllAuthors = async () => {
@@ -23,22 +25,47 @@ class App extends Component {
     return res.data;
   };
 
+  fetchAllBooks = async () => {
+    const res = await instance.get("/api/books/")
+    return res.data;
+  }
+
   async componentDidMount() {
+    console.log("componentDidMount")
     try {
+      // NOTE(Q): why the await op here, when already
+      // have one in fetchAllAuthors?
       const authors = await this.fetchAllAuthors();
+      const books = await this.fetchAllBooks();
+
       this.setState({
         authors: authors,
-        loading: false
+        books: books,
+        loading: false,
       });
+
     } catch (err) {
       console.error(err);
     }
   }
 
+  componentWillUnmount() {
+    console.log("componentWillUnmount")
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log("componentWillUpdate")
+  }
+
+
   getView = () => {
-    if (this.state.loading) {
+    if (this.state.loading) 
+    {
       return <Loading />;
-    } else {
+    } 
+
+    else 
+    {
       return (
         <Switch>
           <Redirect exact from="/" to="/authors" />
@@ -49,12 +76,28 @@ class App extends Component {
               <AuthorsList {...props} authors={this.state.authors} />
             )}
           />
+          {
+          //   <Route
+          //   path="/books/:color"
+          //   render={props => (
+          //     <BookList {...props} books={this.state.books} />
+          //   )}
+          // />
+        }
+          <Route
+            path="/books/"
+            render={props => (
+              <BookList {...props} books={this.state.books} />
+            )}
+          />
         </Switch>
       );
     }
   };
 
   render() {
+    console.log("RENDER")
+
     return (
       <div id="app" className="container-fluid">
         <div className="row">

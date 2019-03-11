@@ -9,6 +9,7 @@ const instance = axios.create({
   baseURL: "https://the-index-api.herokuapp.com"
 });
 
+
 class AuthorDetail extends Component {
   state = {
     author: null,

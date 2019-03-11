@@ -5,7 +5,10 @@ import BookRow from "./BookRow";
 class BookTable extends Component {
   render() {
     const bookRows = this.props.books.map(book => (
-      <BookRow key={book.id} book={book} />
+      <BookRow 
+      key={book.id}
+      book={book}
+      onClick={this.props.onClick} />
     ));
     return (
       <table className="mt-3 table">
